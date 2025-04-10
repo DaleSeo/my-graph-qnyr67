@@ -10,7 +10,7 @@ jobs:
   review:
     runs-on: ubuntu-latest
     concurrency:
-      group: pr-${{ github.event.repository.name }}-${{ github.event.number }}
+      group: pr-${{ github.event.number }}
     environment:
       name: staging
       url: ${{ steps.deploy.outputs.url }}
@@ -20,4 +20,4 @@ jobs:
         id: deploy
         with:
           region: ord
-          name: pr-${{ github.event.number }}
+          name: ${{ github.event.repository.name }}-pr-${{ github.event.number }}
