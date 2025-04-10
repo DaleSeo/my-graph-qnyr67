@@ -1,0 +1,36 @@
+extend schema
+  @link(url: "https://specs.apollo.dev/federation/v2.10", import: ["@key"])
+  @link(
+    url: "https://specs.apollo.dev/connect/v0.1"
+    import: ["@connect", "@source"]
+  )
+  @source(
+    name: "github"
+    http: {
+      baseURL: "https://api.github.com"
+      headers: [
+        { name: "Accept", value: "application/vnd.github+json" }
+        { name: "User-Agent", value: "DaleStudy" }
+        { name: "Authorization", value: "token {$config.token}" }
+      ]
+    }
+  )
+
+type Team {
+  id: ID!
+  name: String!
+  description: String
+}
+
+type Query {
+  teams: [Team]
+    @connect(
+      source: "github"
+      http: { GET: "/orgs/DaleStudy/teams" }
+      selection: """
+      id
+      name
+      description
+      """
+    )
+}
