@@ -18,6 +18,8 @@ jobs:
           graph-ref: ${{ secrets.APOLLO_GRAPH_REF }}
           name: products
           schema: ./products.graphql
+          routing-url: ""
+          allow-invalid-routing-url: "true"
       - uses: apollographql/rover-actions/subgraph-publish@v1
         with:
           apollo-key: ${{ secrets.APOLLO_KEY }}
