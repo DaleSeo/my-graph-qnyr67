@@ -20,10 +20,11 @@ jobs:
           schema: ./products.graphql
           routing-url: "http://ignored"
           allow-invalid-routing-url: "true"
-          log: "debug"
       - uses: apollographql/rover-actions/subgraph-publish@v1
         with:
           apollo-key: ${{ secrets.APOLLO_KEY }}
           graph-ref: ${{ secrets.APOLLO_GRAPH_REF }}
           name: teams
           schema: ./teams.graphql
+          routing-url: "http://ignored"
+          allow-invalid-routing-url: "true"
