@@ -16,14 +16,8 @@ extend schema
     }
   )
 
-type Team {
-  id: ID!
-  name: String!
-  description: String
-}
-
 type Query {
-  teams: [Team]
+  teams: [Team]!
     @connect(
       source: "github"
       http: { GET: "/orgs/DaleStudy/teams" }
@@ -31,6 +25,49 @@ type Query {
       id
       name
       description
+      members {
+        login
+        id
+      }
       """
     )
+  team(name: ID!): Team
+    @connect(
+      source: "github"
+      http: { GET: "/orgs/DaleStudy/teams/{$args.name}" }
+      selection: """
+      id
+      name
+      description
+      """
+    )
+  members(name: ID!): [Member]!
+    @connect(
+      source: "github"
+      http: { GET: "/orgs/DaleStudy/teams/{$args.name}/members?per_page=100" }
+      selection: """
+      login
+      id
+      """
+    )
+}
+
+type Team {
+  id: ID!
+  name: String!
+  description: String
+  members: [Member]!
+    @connect(
+      source: "github"
+      http: { GET: "/orgs/DaleStudy/teams/{$this.name}/members?per_page=100" }
+      selection: """
+      login
+      id
+      """
+    )
+}
+
+type Member {
+  id: ID!
+  login: String!
 }
