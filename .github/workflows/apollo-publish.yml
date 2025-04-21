@@ -3,7 +3,7 @@ on:
   push:
     branches:
       - main
-      - no-url-test
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -20,6 +20,7 @@ jobs:
           name: products
           schema: ./products.graphql
           no-url: true
+          log: debug
       - uses: apollographql/rover-actions/subgraph-publish@no-url
         with:
           apollo-key: ${{ secrets.APOLLO_KEY }}
@@ -27,3 +28,4 @@ jobs:
           name: teams
           schema: ./teams.graphql
           no-url: true
+          log: debug
