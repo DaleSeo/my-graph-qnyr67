@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - main
+      - apollo-actions
 
 jobs:
   build:
@@ -12,20 +13,18 @@ jobs:
       APOLLO_KEY: ${{ secrets.APOLLO_KEY }}
     steps:
       - uses: actions/checkout@v4
-      - uses: apollographql/rover-actions/install-rover-cli@v1
-      - uses: apollographql/rover-actions/subgraph-publish@no-url
+      - uses: apollographql-gh-actions/install-rover@v1
+      - uses: apollographql-gh-actions/rover-subgraph-publish@v1
         with:
           apollo-key: ${{ secrets.APOLLO_KEY }}
           graph-ref: ${{ secrets.APOLLO_GRAPH_REF }}
           name: products
           schema: ./products.graphql
           no-url: true
-          log: debug
-      - uses: apollographql/rover-actions/subgraph-publish@no-url
+      - uses: apollographql-gh-actions/rover-subgraph-publish@v1
         with:
           apollo-key: ${{ secrets.APOLLO_KEY }}
           graph-ref: ${{ secrets.APOLLO_GRAPH_REF }}
           name: teams
           schema: ./teams.graphql
           no-url: true
-          log: debug
