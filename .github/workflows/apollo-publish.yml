@@ -14,14 +14,14 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: apollographql-gh-actions/install-rover@v1
-      - uses: apollographql-gh-actions/rover-subgraph-check@v1
+      - uses: apollographql-gh-actions/rover-subgraph-publish@v1
         with:
           apollo-key: ${{ secrets.APOLLO_KEY }}
           graph-ref: ${{ secrets.APOLLO_GRAPH_REF }}
           name: products
           schema: ./products.graphql
           no-url: true
-      - uses: apollographql-gh-actions/rover-subgraph-check@v1
+      - uses: apollographql-gh-actions/rover-subgraph-publish@v1
         with:
           apollo-key: ${{ secrets.APOLLO_KEY }}
           graph-ref: ${{ secrets.APOLLO_GRAPH_REF }}
