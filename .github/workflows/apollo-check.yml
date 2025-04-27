@@ -9,26 +9,26 @@ jobs:
       APOLLO_VCS_COMMIT: ${{ github.event.pull_request.head.sha }}
     steps:
       - uses: actions/checkout@v4
-      - uses: apollographql/rover-actions/install-rover-cli@v1
-      - uses: apollographql/rover-actions/subgraph-check@v1
+      - uses: apollographql-gh-actions/install-rover@v1
+      - uses: apollographql-gh-actions/rover-subgraph-check@v1
         with:
           apollo-key: ${{ secrets.APOLLO_KEY }}
           graph-ref: ${{ secrets.APOLLO_GRAPH_REF }}
           name: products
           schema: ./products.graphql
-      - uses: apollographql/rover-actions/subgraph-lint@v1
+      - uses: apollographql-gh-actions/rover-subgraph-lint@v1
         with:
           apollo-key: ${{ secrets.APOLLO_KEY }}
           graph-ref: ${{ secrets.APOLLO_GRAPH_REF }}
           name: products
           schema: ./products.graphql
-      - uses: apollographql/rover-actions/subgraph-check@v1
+      - uses: apollographql-gh-actions/rover-subgraph-check@v1
         with:
           apollo-key: ${{ secrets.APOLLO_KEY }}
           graph-ref: ${{ secrets.APOLLO_GRAPH_REF }}
           name: teams
           schema: ./teams.graphql
-      - uses: apollographql/rover-actions/subgraph-lint@v1
+      - uses: apollographql-gh-actions/rover-subgraph-lint@v1
         with:
           apollo-key: ${{ secrets.APOLLO_KEY }}
           graph-ref: ${{ secrets.APOLLO_GRAPH_REF }}
