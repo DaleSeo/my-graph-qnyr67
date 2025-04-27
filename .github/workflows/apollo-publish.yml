@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - main
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -12,19 +13,19 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: apollographql/rover-actions/install-rover-cli@v1
-      - uses: apollographql/rover-actions/subgraph-publish@v1
+      - uses: apollographql/rover-actions/subgraph-publish@no-url
         with:
           apollo-key: ${{ secrets.APOLLO_KEY }}
           graph-ref: ${{ secrets.APOLLO_GRAPH_REF }}
           name: products
           schema: ./products.graphql
-          routing-url: "http://ignored"
-          allow-invalid-routing-url: "true"
-      - uses: apollographql/rover-actions/subgraph-publish@v1
+          no-url: true
+          log: debug
+      - uses: apollographql/rover-actions/subgraph-publish@no-url
         with:
           apollo-key: ${{ secrets.APOLLO_KEY }}
           graph-ref: ${{ secrets.APOLLO_GRAPH_REF }}
           name: teams
           schema: ./teams.graphql
-          routing-url: "http://ignored"
-          allow-invalid-routing-url: "true"
+          no-url: true
+          log: debug
