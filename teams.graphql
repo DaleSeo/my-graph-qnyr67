@@ -31,9 +31,11 @@ type Query {
       }
       """
     )
+
   team(name: ID!): Team
     @connect(
       source: "github"
+      # https://docs.github.com/en/rest/teams/teams#list-teams
       http: { GET: "/orgs/DaleStudy/teams/{$args.name}" }
       selection: """
       id
@@ -41,13 +43,35 @@ type Query {
       description
       """
     )
-  members(name: ID!): [Member]!
+
+  members(teamName: ID!): [Member]!
     @connect(
       source: "github"
-      http: { GET: "/orgs/DaleStudy/teams/{$args.name}/members?per_page=100" }
+      # https://docs.github.com/en/rest/teams/members#list-team-members
+      http: {
+        GET: "/orgs/DaleStudy/teams/{$args.teamName}/members?per_page=100"
+      }
       selection: """
       login
       id
+      """
+    )
+
+  gitNodes: [GitNode]!
+    @connect(
+      source: "github"
+      http: {
+        # https://docs.github.com/en/rest/git/trees#get-a-tree
+        GET: "/repos/DaleStudy/leetcode-study/git/trees/main?recursive=1"
+      }
+      selection: """
+      $.tree {
+        type: type->match(
+          ["tree", "DIRECTORY"],
+          ["blob", "FILE"]
+        )
+        path
+      }
       """
     )
 }
@@ -70,4 +94,14 @@ type Team {
 type Member {
   id: ID!
   login: String!
+}
+
+type GitNode {
+  type: PathType!
+  path: String!
+}
+
+enum PathType {
+  FILE
+  DIRECTORY
 }
