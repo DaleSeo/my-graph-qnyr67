@@ -76,10 +76,15 @@ type Query {
     )
 }
 
+"An organization team"
 type Team {
+  "The unique identifier"
   id: ID!
+  "The name"
   name: String!
+  "The description"
   description: String
+  "The members"
   members: [Member]!
     @connect(
       source: "github"
@@ -91,16 +96,23 @@ type Team {
     )
 }
 
+"An organization member"
 type Member {
+  "The unique identifier"
   id: ID!
+  "The login name"
   login: String!
 }
 
+"A file or directory in the Git repository"
 type GitNode {
+  "The unique identifier of the node"
   type: PathType!
+  "The path of the node in the repository"
   path: String!
 }
 
+"The type of a path in a Git repository"
 enum PathType {
   FILE
   DIRECTORY
