@@ -17,6 +17,7 @@ extend schema
   )
 
 type Query {
+  "The organization teams"
   teams: [Team]!
     @connect(
       source: "github"
@@ -32,6 +33,7 @@ type Query {
       """
     )
 
+  "A team by name"
   team(name: ID!): Team
     @connect(
       source: "github"
@@ -44,6 +46,7 @@ type Query {
       """
     )
 
+  "A list of all members in a team"
   members(teamName: ID!): [Member]!
     @connect(
       source: "github"
@@ -57,6 +60,7 @@ type Query {
       """
     )
 
+  "A list of all files in the Git repository"
   gitNodes: [GitNode]!
     @connect(
       source: "github"
@@ -106,14 +110,16 @@ type Member {
 
 "A file or directory in the Git repository"
 type GitNode {
-  "The unique identifier of the node"
+  "The type of the node"
   type: PathType!
-  "The path of the node in the repository"
+  "The path of the node"
   path: String!
 }
 
 "The type of a path in a Git repository"
 enum PathType {
+  "A file"
   FILE
+  "A directory"
   DIRECTORY
 }
