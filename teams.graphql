@@ -17,6 +17,7 @@ extend schema
   )
 
 type Query {
+  "The organization teams"
   teams: [Team]!
     @connect(
       source: "github"
@@ -31,9 +32,12 @@ type Query {
       }
       """
     )
+
+  "A team by name"
   team(name: ID!): Team
     @connect(
       source: "github"
+      # https://docs.github.com/en/rest/teams/teams#list-teams
       http: { GET: "/orgs/DaleStudy/teams/{$args.name}" }
       selection: """
       id
@@ -41,21 +45,50 @@ type Query {
       description
       """
     )
-  members(name: ID!): [Member]!
+
+  "A list of all members in a team"
+  members(teamName: ID!): [Member]!
     @connect(
       source: "github"
-      http: { GET: "/orgs/DaleStudy/teams/{$args.name}/members?per_page=100" }
+      # https://docs.github.com/en/rest/teams/members#list-team-members
+      http: {
+        GET: "/orgs/DaleStudy/teams/{$args.teamName}/members?per_page=100"
+      }
       selection: """
       login
       id
       """
     )
+
+  "A list of all files in the Git repository"
+  gitNodes: [GitNode]!
+    @connect(
+      source: "github"
+      http: {
+        # https://docs.github.com/en/rest/git/trees#get-a-tree
+        GET: "/repos/DaleStudy/leetcode-study/git/trees/main?recursive=1"
+      }
+      selection: """
+      $.tree {
+        type: type->match(
+          ["tree", "DIRECTORY"],
+          ["blob", "FILE"]
+        )
+        path
+      }
+      """
+    )
 }
 
+"An organization team"
 type Team {
+  "The unique identifier"
   id: ID!
+  "The name"
   name: String!
+  "The description"
   description: String
+  "The members"
   members: [Member]!
     @connect(
       source: "github"
@@ -67,7 +100,26 @@ type Team {
     )
 }
 
+"An organization member"
 type Member {
+  "The unique identifier"
   id: ID!
+  "The login name"
   login: String!
+}
+
+"A file or directory in the Git repository"
+type GitNode {
+  "The type of the node"
+  type: PathType!
+  "The path of the node"
+  path: String!
+}
+
+"The type of a path in a Git repository"
+enum PathType {
+  "A file"
+  FILE
+  "A directory"
+  DIRECTORY
 }
