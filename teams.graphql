@@ -70,10 +70,7 @@ type Query {
       }
       selection: """
       $.tree {
-        type: type->match(
-          ["tree", "DIRECTORY"],
-          ["blob", "FILE"]
-        )
+        type
         path
       }
       """
@@ -111,15 +108,7 @@ type Member {
 "A file or directory in the Git repository"
 type GitNode {
   "The type of the node"
-  type: PathType!
+  type: String!
   "The path of the node"
   path: String!
-}
-
-"The type of a path in a Git repository"
-enum PathType {
-  "A file"
-  FILE
-  "A directory"
-  DIRECTORY
 }
