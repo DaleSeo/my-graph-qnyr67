@@ -61,7 +61,7 @@ type Query {
     )
 
   "A list of all files in the Git repository"
-  gitNodes: [GitNode]!
+  gitTrees: [GitTree]!
     @connect(
       source: "github"
       http: {
@@ -106,7 +106,7 @@ type Member {
 }
 
 "A file or directory in the Git repository"
-type GitNode {
+type GitTree {
   "The type of the node"
   type: String!
   "The path of the node"
