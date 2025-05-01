@@ -29,6 +29,7 @@ type Query {
       members {
         login
         id
+
       }
       """
     )
@@ -57,6 +58,7 @@ type Query {
       selection: """
       login
       id
+      avatarUrl: avatar_url
       """
     )
 
@@ -93,6 +95,7 @@ type Team {
       selection: """
       login
       id
+      avatarUrl: avatar_url
       """
     )
 }
@@ -103,6 +106,8 @@ type Member {
   id: ID!
   "The login name"
   login: String!
+  "The avatar URL"
+  avatarUrl: String!
 }
 
 "A file or directory in the Git repository"
