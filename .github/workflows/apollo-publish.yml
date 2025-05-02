@@ -3,8 +3,6 @@ on:
   push:
     branches:
       - main
-      - apollo-actions
-
 jobs:
   build:
     runs-on: ubuntu-latest
