@@ -7,8 +7,6 @@ jobs:
   build:
     runs-on: ubuntu-latest
     environment: apollo
-    env:
-      APOLLO_KEY: ${{ secrets.APOLLO_KEY }}
     steps:
       - uses: actions/checkout@v4
       - uses: apollographql-gh-actions/install-rover@v1

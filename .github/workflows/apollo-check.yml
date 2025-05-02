@@ -4,9 +4,6 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    env:
-      APOLLO_KEY: ${{ secrets.APOLLO_KEY }}
-      APOLLO_VCS_COMMIT: ${{ github.event.pull_request.head.sha }}
     steps:
       - uses: actions/checkout@v4
       - uses: apollographql-gh-actions/install-rover@v1
