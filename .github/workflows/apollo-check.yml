@@ -6,6 +6,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       APOLLO_VCS_BRANCH: ${{ github.head_ref }}
+      APOLLO_VCS_COMMIT: ${{ github.event.pull_request.head.sha }}
     steps:
       - uses: actions/checkout@v4
       - uses: apollographql-gh-actions/install-rover@v1
@@ -27,7 +28,7 @@ jobs:
           graph-ref: ${{ secrets.APOLLO_GRAPH_REF }}
           name: products
           schema: ./products.graphql
-          log: trace
+
       - uses: apollographql-gh-actions/rover-subgraph-check@v1
         with:
           apollo-key: ${{ secrets.APOLLO_KEY }}
