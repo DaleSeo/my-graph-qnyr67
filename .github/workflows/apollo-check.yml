@@ -12,14 +12,13 @@ jobs:
       - name: debug
         run: |
           git branch --show-current
-          git log -1
       - uses: apollographql-gh-actions/rover-subgraph-check@v1
         with:
           apollo-key: ${{ secrets.APOLLO_KEY }}
           graph-ref: ${{ secrets.APOLLO_GRAPH_REF }}
           name: products
           schema: ./products.graphql
-          log: true
+          log: trace
       - uses: apollographql-gh-actions/rover-subgraph-lint@v1
         with:
           apollo-key: ${{ secrets.APOLLO_KEY }}
