@@ -7,7 +7,7 @@ jobs:
     env:
       APOLLO_VCS_COMMIT: ${{ github.event.pull_request.head.sha }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v2
       - uses: apollographql-gh-actions/install-rover@v1
       - uses: apollographql-gh-actions/rover-subgraph-check@v1
         with:
