@@ -4,12 +4,15 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      APOLLO_VCS_BRANCH: ${{ github.head_ref }}
-      APOLLO_VCS_COMMIT: ${{ github.event.pull_request.head.sha }}
+      APOLLO_VCS_BRANCH: ${{ github.event_name == 'push' && github.ref_name || github.head_ref }}
+      APOLLO_VCS_COMMIT: ${{ github.event_name == 'push' && github.sha || github.event.pull_request.head.sha }}
     steps:
       - uses: actions/checkout@v4
       - name: test
         run: |
+          echo "## envars ##"
+          echo "env.APOLLO_VCS_BRANCH: ${{ env.APOLLO_VCS_BRANCH }}"
+          echo "env.APOLLO_VCS_COMMIT: ${{ env.APOLLO_VCS_COMMIT }}"
           echo "## pull request ##"
           echo "github.ref: ${{ github.ref }}"
           echo "github.head_ref: ${{ github.head_ref }}"
